@@ -1,5 +1,8 @@
 
 import Flooper from '../../dist/Flooper.js';
+import {consoleColophon} from './consoleColophon';
+
+consoleColophon();
 var i = new Flooper();
 i.init();
 
