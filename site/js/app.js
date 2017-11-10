@@ -1,5 +1,5 @@
-console.log('hello world');
 
+import Flooper from '../../dist/Flooper.js';
 var i = new Flooper();
 i.init();
 
