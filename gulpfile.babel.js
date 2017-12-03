@@ -18,10 +18,10 @@ import webpack from "webpack"
 // import webpackDevMiddleware from 'webpack-dev-middleware'
 // import webpackHotMiddleware from 'webpack-hot-middleware'
 import {libConfig, siteConfig} from './webpack.config.babel.js'
-import packageJson from './package.json';
+import pkg from './package.json';
 
 // CONSTANTS
-const paths = packageJson.devPaths;
+const paths = pkg.flooper.devPaths;
 let $ = gulpLoadPlugins(),
     bs = broswerSync.create();
 // Environment variables
