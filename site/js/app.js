@@ -1,6 +1,7 @@
 import {consoleColophon} from './consoleColophon';
 import { initDemos } from './demos.js';
 import { Player } from './Player.js';
+import animate from './animation.js';
 //
 consoleColophon();
 
@@ -19,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function(){
   updateDocScope();
   createPlayer();
   initDemos();
+  // Attach animations
+  animate();
 }, false);
 
 
