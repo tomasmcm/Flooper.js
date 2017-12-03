@@ -90,5 +90,7 @@
         "destName": "public"
       }
     },
+    "browserSupport": "IE 10+, Modern Browsers",
+    "size": "8.16 kB"
   }
 }

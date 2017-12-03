@@ -154,8 +154,9 @@ gulp.task("webpack:lib", (cb) => {
  */
 gulp.task("uglify:lib", () => {
   if (!isProduction) return
-  return gulp.src(`${paths.lib.dest}/**/*.js`)
+  return gulp.src([`${paths.lib.dest}/**/*.js`, `!${paths.lib.dest}/**/*.js.map`])
   .pipe($.uglify({preserveComments: "some"}))
+  .pipe($.size({title: $.util.colors.bgRed('[SIZE] Images: ')}))
   .pipe(gulp.dest(paths.lib.dest))
   .pipe(bs.stream());
 });
@@ -177,6 +178,32 @@ gulp.task("uglify", (cb) => {
 });
 
 
+/**
+ * =======================================================
+ * $ gulp size
+ * write size to package.json
+ * =======================================================
+ */
+gulp.task("size:lib", function(){
+  if (!isProduction) return
+
+  const s = $.size();
+  return gulp.src(`${paths.lib.dest}/**/*.js`)
+    .pipe(s)
+    .pipe($.notify({
+      onLast: true,
+      message: () => `Total size ${s.prettySize}`
+    }))
+    .on('end', function(){
+      return gulp.src('./package.json')
+        .pipe($.jsonEditor({
+          flooper: {
+            size: s.prettySize
+          }
+        }))
+        .pipe(gulp.dest('./'))
+    })
+});
 
 /**
  * =======================================================
@@ -217,6 +244,7 @@ gulp.task("build", (cb) => {
     "webpack:site",
     ["sass", "jade", "copy-assets"],
     "uglify",
+    "size:lib",
     cb
   );
 });
@@ -239,7 +267,7 @@ gulp.task("watch", (cb) => {
 
       // WEBPACK HMR did the job with browser sync
       $.watch(`${paths.site.src}/js/**/*`, () => {
-        gulp.start("webpack:site");
+        runSequence("webpack:lib", "webpack:site");
       });
 
       $.watch(`${paths.lib.src}/**/*`, () => {
@@ -285,7 +313,6 @@ gulp.task('deploy:gh-pages', function() {
       force: true
     }));
 });
-
 
 
 // pass flag --env production when using
