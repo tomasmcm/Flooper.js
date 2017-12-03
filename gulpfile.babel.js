@@ -211,18 +211,17 @@ gulp.task("size:lib", function(){
  * =======================================================
  */
 gulp.task("sass", () => {
-  let params = {
-    outputStyle: isProduction ? "compressed" : "expanded"
-  };
-
   return gulp.src(`${paths.site.src}/stylesheets/**/*.scss`)
   .pipe($.plumber())
-  .pipe($.sass.sync(params).on("error", $.sass.logError))
+  .pipe($.sass({
+    includePaths: ['node_modules'],
+    outputStyle: isProduction ? "compressed" : "expanded"
+  }).on("error", $.sass.logError))
   .pipe($.autoprefixer({
     browsers: [
-      "last 4 versions",
-      "ie 9",
-      "iOS 6",
+      "last 3 versions",
+      "ie 10",
+      "iOS 8",
       "Android 4"
     ]
   }))
