@@ -111,7 +111,9 @@ gulp.task("jade", () => {
   ])
   .pipe($.plumber())
   .pipe($.data(() => {
-    return require(`${paths.site.src}/jade/config.json`);
+    var config = require(`${paths.site.src}/jade/config.json`);
+    var data = {...config, ...pkg } // config file and package.json
+    return data
   }))
   .pipe($.jade({pretty: true}))
   .pipe(gulp.dest(paths.site.dest))
