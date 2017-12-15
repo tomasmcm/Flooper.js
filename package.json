@@ -9,7 +9,7 @@
     "start:production": "gulp --env production",
     "build:production": "gulp build --env production",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy:site": "cd node_modules/gulp-gh-pages/ && npm install --save gift@0.10.1 && cd .. && cd .. && gulp deploy:site --env production"
+    "deploy:site": "gulp deploy --env production"
   },
   "repository": {
     "type": "git",
